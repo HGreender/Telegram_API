@@ -7,7 +7,7 @@ def api_id_input():
             print("Поле не может быть пустым!")
             continue
         try:
-            number = float(user_input)  # или int()
+            number = int(user_input)  # или int()
             return number
         except ValueError:
             print("Ошибка: введите число!")
