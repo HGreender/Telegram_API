@@ -4,10 +4,9 @@ from telethon.tl.functions.contacts import GetContactsRequest
 import pandas as pd
 import asyncio
 
-import test_inputs
+from data_checker import get_attributes
 
-api_id = test_inputs.api_id_input()
-api_hash = test_inputs.api_hash_input()
+api_id, api_hash, phone = get_attributes()
 
 session_name = 'Client_session'
 system_version = platform.uname().release
@@ -35,10 +34,7 @@ async def export_contacts():
             'Premium': is_premium
         })
 
-
     df = pd.DataFrame(data)
-    # new_df = df.sort_values(by='Premium', ascending=False)
-    # print(new_df.head())
     df.to_excel('contacts.xlsx', index=False)
     print("Контакты сохранены в файл contacts.xlsx")
 
