@@ -9,7 +9,7 @@ import test_inputs
 api_id = test_inputs.api_id_input()
 api_hash = test_inputs.api_hash_input()
 
-session_name = 'Session'
+session_name = 'Client_session'
 system_version = platform.uname().release
 device_model = platform.uname().machine
 app_version = telethon.version.__version__
