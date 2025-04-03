@@ -1,6 +1,6 @@
 :: @echo off
-:: Проверяем, установлен ли Python
-where python
+:: Проверяем Python
+where python >nul 2>nul
 if %errorlevel% equ 0 (
     echo Python уже установлен.
     python --version
@@ -15,5 +15,6 @@ if %errorlevel% equ 0 (
 python -m venv .env
 .env\Scripts\activate
 pip install uv
-uv pip install telethon pandas asyncio --system
-uv pip install platform --system
+uv pip install telethon pandas asyncio openpyxl
+uv pip install platform
+pause

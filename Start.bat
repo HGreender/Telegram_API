@@ -1,1 +1,2 @@
 python Contact_ripper.py
+pause
