@@ -11,7 +11,9 @@ if "%PYTHON_VERSION%"=="3.10.7" (
     start /wait python-installer.exe /quiet InstallAllUsers=1 PrependPath=1
     del python-installer.exe
     echo Python has been installed.
-    exit /b
+
+    :: ОБНОВЛЕНИЕ PATH БЕЗ ПЕРЕЗАПУСКА
+    set "PATH=%PATH%;C:\Program Files\Python310\Scripts;C:\Program Files\Python310\"
 )
 
 :: Устанавливаем зависимости
