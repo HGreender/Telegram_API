@@ -1,20 +1,25 @@
-:: @echo off
-:: Проверяем Python
-where python >nul 2>nul
-if %errorlevel% equ 0 (
-    echo Python уже установлен.
-    python --version
+@echo off
+:: Получаем версию Python
+for /f "tokens=2 delims= " %%v in ('python --version 2^>^&1') do set PYTHON_VERSION=%%v
+
+:: Проверяем, установлена ли нужная версия (3.10.7)
+if "%PYTHON_VERSION%"=="3.10.7" (
+    echo Python 3.10.7 is installed.
 ) else (
-    echo Python не найден. Устанавливаем...
+    echo Python 3.10.7 is not installed. Installing...
     curl -o python-installer.exe https://www.python.org/ftp/python/3.10.7/python-3.10.7-amd64.exe
-    python-installer.exe /quiet InstallAllUsers=1 PrependPath=1
+    start /wait python-installer.exe /quiet InstallAllUsers=1 PrependPath=1
     del python-installer.exe
-    echo Python успешно установлен.
-    python --version
+    echo Python has been installed.
+    exit /b
 )
+
+:: Устанавливаем зависимости
+python -m pip install --upgrade pip
 python -m venv .env
-.env\Scripts\activate
+call .env\Scripts\activate
+
 pip install uv
 uv pip install telethon pandas asyncio openpyxl
-uv pip install platform
+
 pause
