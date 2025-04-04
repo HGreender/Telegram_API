@@ -1,28 +1,11 @@
-import telethon, platform
 from telethon import TelegramClient
 from telethon.tl.functions.contacts import GetContactsRequest
 import pandas as pd
 import asyncio
 
-from data_checker import get_attributes
+from data_checker import get_attributes, get_device_info
 
-api_id, api_hash, phone = get_attributes()
-
-session_name = 'Client_session'
-system_version = platform.uname().release
-device_model = platform.uname().machine
-app_version = telethon.version.__version__
-
-client = TelegramClient(
-    session_name,
-    api_id=api_id,
-    api_hash=api_hash,
-    system_version=system_version,
-    device_model=device_model,
-    app_version=app_version
-)
-
-async def export_contacts():
+async def export_contacts(client):
     response = await client(GetContactsRequest(hash=0))
     data = []
     for contact in response.users:
@@ -39,8 +22,21 @@ async def export_contacts():
     print("Контакты сохранены в файл contacts.xlsx")
 
 async def main():
+    api_id, api_hash, phone = get_attributes()
+    session_name = f'session_{phone}'
+    system_version, device_model, app_version = get_device_info()
+
+    client = TelegramClient(
+        session_name,
+        api_id=api_id,
+        api_hash=api_hash,
+        system_version=system_version,
+        device_model=device_model,
+        app_version=app_version
+    )
+
     await client.start()
-    await export_contacts()
+    await export_contacts(client)
     await client.disconnect()
 
 if __name__ == '__main__':

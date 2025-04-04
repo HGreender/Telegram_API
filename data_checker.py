@@ -1,6 +1,8 @@
 import os.path
 import json
 
+import telethon, platform
+
 from test_inputs import api_id_input, api_hash_input, api_phone_input
 
 def get_attributes(path='.env/data.dat'):
@@ -43,3 +45,9 @@ def create_data(path: str):
     with open(path, 'w') as file:
         json.dump(data, file, indent=4)
     print('data.dat has been created')
+
+def get_device_info():
+    system_version = platform.uname().release
+    device_model = platform.uname().machine
+    app_version = telethon.version.__version__
+    return system_version, device_model, app_version
