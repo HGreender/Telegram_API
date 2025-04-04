@@ -35,7 +35,7 @@ async def main():
         app_version=app_version
     )
 
-    await client.start()
+    await client.start(phone)
     await export_contacts(client)
     await client.disconnect()
 
