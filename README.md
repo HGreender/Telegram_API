@@ -11,3 +11,5 @@
 7. Enter your phone number into program (`Start.bat`)
 8. Confirm the code that you will receive in Telegram
 9. Done! Check the Excel file in the program folder!
+
+The next time you start the program, you won't need to enter anything.
