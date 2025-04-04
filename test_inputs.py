@@ -26,7 +26,7 @@ def api_hash_input():
 
 def api_phone_input():
     while True:
-        user_input = input("Введите номер телефона: ").strip()
+        user_input = input("Введите номер телефона (начиная с 8): ").strip()
         if not user_input:
             print("Поле не может быть пустым!")
             continue
