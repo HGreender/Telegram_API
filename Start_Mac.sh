@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# Активируем виртуальное окружение
-source .env/bin/activate
-
 # Запускаем скрипт
 python Contact_ripper.py
 

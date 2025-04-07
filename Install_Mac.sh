@@ -2,37 +2,39 @@
 
 REQUIRED_PYTHON_VERSION="3.10.7"
 
+echo "🔍 Проверяю наличие pyenv..."
+
 # Проверка установлен ли pyenv
 if ! command -v pyenv &> /dev/null; then
-    echo "pyenv не установлен. Устанавливаю pyenv..."
-    curl https://pyenv.run | bash
-
-    # Добавляем pyenv в окружение
-    export PATH="$HOME/.pyenv/bin:$PATH"
-    eval "$(pyenv init --path)"
-    eval "$(pyenv virtualenv-init -)"
+    echo "❌ pyenv не найден."
+    echo "➡️ Установи pyenv вручную: https://github.com/pyenv/pyenv#installation"
+    echo "   Или удали ~/.pyenv, если предыдущая установка была повреждена:"
+    echo "     rm -rf ~/.pyenv"
+    exit 1
 fi
 
-# Проверка установлен ли нужный Python
+# Инициализация pyenv в текущем shell
+export PATH="$HOME/.pyenv/bin:$PATH"
+eval "$(pyenv init --path)"
+eval "$(pyenv virtualenv-init -)"
+
+# Установка нужной версии Python, если её нет
 if ! pyenv versions --bare | grep -q "$REQUIRED_PYTHON_VERSION"; then
-    echo "Python $REQUIRED_PYTHON_VERSION не найден. Устанавливаю..."
+    echo "⬇️ Устанавливаю Python $REQUIRED_PYTHON_VERSION..."
     pyenv install "$REQUIRED_PYTHON_VERSION"
 fi
 
-# Устанавливаем нужную версию Python локально
-pyenv local "$REQUIRED_PYTHON_VERSION"
+# Используем нужную версию Python глобально
+pyenv global "$REQUIRED_PYTHON_VERSION"
 
-# Убедимся, что мы используем правильный Python
 PYTHON_BIN="$(pyenv which python)"
-echo "Используется Python: $($PYTHON_BIN --version)"
+PIP_BIN="$(pyenv which pip)"
 
-# Создание виртуального окружения
-$PYTHON_BIN -m venv .env
-source .env/bin/activate
+echo "🧪 Используется Python: $($PYTHON_BIN --version)"
 
-# Установка зависимостей
-pip install --upgrade pip
-pip install uv
+# Установка зависимостей прямо в текущий Python (без venv)
+$PIP_BIN install --upgrade pip
+$PIP_BIN install uv
 uv pip install telethon pandas asyncio openpyxl
 
-echo "✅ Установка завершена."
+echo "✅ Установка завершена (без виртуального окружения)."
