@@ -5,7 +5,7 @@ import telethon, platform
 
 from test_inputs import api_id_input, api_hash_input, api_phone_input
 
-def get_attributes(path='.env/data.dat'):
+def get_attributes(path='myenv/data.dat'):
     if not os.path.isfile(path):
         create_data(path)
         api_id, api_hash, phone = read_data(path)
