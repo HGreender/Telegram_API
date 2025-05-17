@@ -3,7 +3,7 @@ from telethon.tl.functions.contacts import GetContactsRequest
 import pandas as pd
 import asyncio
 
-from data_checker import get_attributes, get_device_info
+from my_libs.data_checker import get_attributes, get_device_info
 
 async def export_contacts(client):
     response = await client(GetContactsRequest(hash=0))
