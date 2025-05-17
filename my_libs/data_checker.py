@@ -3,7 +3,7 @@ import json
 
 import telethon, platform
 
-from test_inputs import api_id_input, api_hash_input, api_phone_input
+from my_libs.test_inputs import api_id_input, api_hash_input, api_phone_input
 
 def get_attributes(path='.env/data.dat'):
     if not os.path.isfile(path):
